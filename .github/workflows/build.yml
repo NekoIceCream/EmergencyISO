@@ -26,12 +26,12 @@ jobs:
           pacman -Sy sudo archiso --noconfirm --needed
           
       - name: Build
-        run: sudo mkarchiso -v -w /tmp/archiso-tmp ./
+        run: sudo mkarchiso -v -w ./out ./
       
       - name: Upload EmergencyISO
         uses: actions/upload-artifact@v2
         with:
             name: EmergencyISO-x86_64
-            path: /tmp/archiso-tmp/*.iso
+            path: ./out/*.iso
             if-no-files-found: error
             
