@@ -26,7 +26,7 @@ jobs:
           pacman -Sy sudo archiso --noconfirm --needed
           
       - name: Build
-        run: sudo mkarchiso -v -w /tmp/archiso-tmp /path/to/profile/
+        run: sudo mkarchiso -v -w /tmp/archiso-tmp ./
       
       - name: Upload EmergencyISO
         uses: actions/upload-artifact@v2
