@@ -1,0 +1,37 @@
+##########################################################################
+name: Build CI (x86_64)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux
+      options: --privileged
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup
+
+    steps:
+      - uses: actions/checkout@v2
+##########################################################################
+      - name: Install requirement tools
+        run: |
+          pacman -Sy sudo archiso --noconfirm --needed
+          
+      - name: Build
+        run: sudo mkarchiso -v -w /tmp/archiso-tmp /path/to/profile/
+      
+      - name: Upload EmergencyISO
+        uses: actions/upload-artifact@v2
+        with:
+            name: EmergencyISO-x86_64
+            path: /tmp/archiso-tmp/*.iso
+            if-no-files-found: error
+            
